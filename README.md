@@ -1,0 +1,4 @@
+pykismet
+========
+
+Python Akismet client.
