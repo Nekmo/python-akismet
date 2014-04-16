@@ -9,7 +9,7 @@ def read(*paths):
 
 setup(
     name='pykismet',
-    version='0.0.0',
+    version='0.1.0',
     description='A Python 3 module for the Akismet spam comment-spam-detection web service.',
     long_description=(read('README.md')),
     url='https://github.com/grundleborg/pykismet',
