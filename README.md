@@ -1,5 +1,5 @@
-pykismet
-========
+pykismet3
+=========
 
 A Python 3 Akismet client library.
 
@@ -21,7 +21,7 @@ The following Akismet API Calls are not yet supported:
 
 2. Install this library:
 
-    pip install pykismet
+    pip install pykismet3
 
 3. Make some calls to Akismet (see example below to get started)
 
@@ -29,7 +29,7 @@ The following Akismet API Calls are not yet supported:
 
 Import and instantiate Pykismet.
 
-    from pykismet import Akismet
+    from pykismet3 import Akismet
     import os
 
     a = Akismet(blog_url="http://your.blog/url",

@@ -8,7 +8,7 @@ def read(*paths):
         return f.read()
 
 setup(
-    name='pykismet',
+    name='pykismet3',
     version='0.1.0',
     description='A Python 3 module for the Akismet spam comment-spam-detection web service.',
     long_description=(read('README.md')),
@@ -16,7 +16,7 @@ setup(
     license='MIT',
     author='George Goldberg',
     author_email='george@grundleborg.com',
-    py_modules=['pykismet'],
+    py_modules=['pykismet3'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
