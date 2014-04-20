@@ -1,7 +1,7 @@
 import requests
 
 # Akismet Settings
-AKISMET_USER_AGENT = "Pykismet/0.1.0"
+AKISMET_USER_AGENT = "Pykismet/0.1.1"
 
 # API URIs
 AKISMET_CHECK_URL = "rest.akismet.com/1.1/comment-check"
