@@ -12,7 +12,7 @@ setup(
     version='0.1.0',
     description='A Python 3 module for the Akismet spam comment-spam-detection web service.',
     long_description=(read('README.md')),
-    url='https://github.com/grundleborg/pykismet',
+    url='https://github.com/grundleborg/pykismet3',
     license='MIT',
     author='George Goldberg',
     author_email='george@grundleborg.com',
