@@ -32,9 +32,10 @@ Supported API
 =============
 
 The Following Akismet API Calls are currently supported:
-* Comment Check
-* Submit Ham
-* Submit Spam
+
+- Comment Check
+- Submit Ham
+- Submit Spam
 
 Unsupported API
 ===============
@@ -45,9 +46,9 @@ The following Akismet API Calls are not yet supported:
 Installation
 ============
 
-1. Signup for Akismet and get yourself an API key at http://akismet.com/plans/
+1. Signup for Akismet and get yourself an API key at http://akismet.com/plans/ (You don't need to pay)
 
-2. Install this library:
+2. Install this library::
 
     pip install pykismet3
 
@@ -56,56 +57,51 @@ Installation
 Example
 =======
 
-Import and instantiate Pykismet.
+Import and instance Akismet.
 
-.. code-block::python
+.. code-block:: python
 
-    from pykismet3 import Akismet
-    import os
+    from akismet import Akismet
 
-    a = Akismet(blog_url="http://your.blog/url",
-                user_agent="My Awesome Web App/0.0.1")
+    # API KEY (first argument) is required. blog can be defined later.
+    akismet = Akismet('1ba29d6f120c', blog="http://your.blog/url",
+                      user_agent="My Application Name/0.0.1")
 
-    a.api_key="YOUR_AKISMET_API_KEY"
 
 Comment Check
 -------------
 
-.. code-block::python
+.. code-block:: python
 
-    a.check({'user_ip': os.environ['REMOTE_ADDR'],
-             'user_agent': os.environ['HTTP_USER_AGENT'],
-             'referrer': os.environ.get('HTTP_REFERER', 'unknown'),
-             'comment_content': 'I LIEK YOUR WEB SITE',
-             'comment_author': 'Comment Author',
-             'is_test': 1,
-    })
+    akismet.check('192.168.1.3', 'Firefox / COMMENT USER AGENT', comment_author='King Arthur',
+                  comment_author_email='arthur@camelot.co.uk', comment_author_url='http://camelot.co.uk',
+                  comment_content='The Lady of the Lake, her arm clad in the purest shimmering samite, '
+                                   'held aloft Excalibur from the bosom of the water, signifying by divine'
+                                   ' providence that I, Arthur, was to carry Excalibur. That is why I '
+                                   'am your king.', referrer='http://camelot-search/?q=Peasant+Woman')
 
 Submit Ham
 ----------
 
-.. code-block::python
+.. code-block:: python
 
-    a.submit_ham({'user_ip': os.environ['REMOTE_ADDR'],
-                  'user_agent': os.environ['HTTP_USER_AGENT'],
-                  'referrer': os.environ.get('HTTP_REFERER', 'unknown'),
-                  'comment_content': 'I LIEK YOUR WEB SITE',
-                  'comment_author': 'Comment Author',
-                  'is_test': 1,
-    })
+    akismet.submit_ham('192.168.1.12', 'FIREFOX / COMMENT USER AGENT', comment_author='Tim',
+                       comment_author_email='tim@witch.co.uk',
+                       comment_author_url='http://witch.co.uk',
+                       comment_content="Look, that rabbit's got a vicious streak a mile wide! It's a killer!")
 
 Submit Spam
 -----------
 
-.. code-block::python
+.. code-block:: python
 
-    a.submit_spam({'user_ip': os.environ['REMOTE_ADDR'],
-                   'user_agent': os.environ['HTTP_USER_AGENT'],
-                   'referrer': os.environ.get('HTTP_REFERER', 'unknown'),
-                   'comment_content': 'I LIEK YOUR WEB SITE',
-                   'comment_author': 'Comment Author',
-                   'is_test': 1,
-    })
+    akismet.submit_spam('192.168.1.4', 'FIREFOX / COMMENT USER AGENT', comment_author='Frenchman',
+                        comment_author_email='frenchman@guy-de-lombard.fr',
+                        comment_author_url='http://guy-de-lombard.fr',
+                        comment_content="You don't frighten us, English pig-dogs! Go and boil your "
+                                        "bottoms, sons of a silly person! I blow my nose at you, "
+                                        "so-called Ah-thoor Keeng, you and all your silly English "
+                                        "K-n-n-n-n-n-n-n-niggits!")
 
 Documentation
 #############
