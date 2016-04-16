@@ -1,5 +1,4 @@
 import datetime
-import requests
 from akismet.exceptions import AkismetServerError, MissingParameterError
 
 __version__ = '0.2.2'
@@ -52,6 +51,7 @@ class Akismet:
         return data
 
     def _request(self, url, parameters, headers=None):
+        import requests
         headers = headers or self.get_headers()
         return requests.post(url, data=parameters, headers=headers)
 
