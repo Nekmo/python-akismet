@@ -33,6 +33,8 @@ Example
 
 Import and instantiate Pykismet.
 
+.. code-block::python
+
     from pykismet3 import Akismet
     import os
 
@@ -43,6 +45,8 @@ Import and instantiate Pykismet.
 
 Comment Check
 -------------
+
+.. code-block::python
 
     a.check({'user_ip': os.environ['REMOTE_ADDR'],
              'user_agent': os.environ['HTTP_USER_AGENT'],
@@ -55,6 +59,8 @@ Comment Check
 Submit Ham
 ----------
 
+.. code-block::python
+
     a.submit_ham({'user_ip': os.environ['REMOTE_ADDR'],
                   'user_agent': os.environ['HTTP_USER_AGENT'],
                   'referrer': os.environ.get('HTTP_REFERER', 'unknown'),
@@ -65,6 +71,8 @@ Submit Ham
 
 Submit Spam
 -----------
+
+.. code-block::python
 
     a.submit_spam({'user_ip': os.environ['REMOTE_ADDR'],
                    'user_agent': os.environ['HTTP_USER_AGENT'],

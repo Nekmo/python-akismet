@@ -12,7 +12,7 @@ class MissingApiKeyError(AkismetError):
     pass
 
 
-class MissingParameterError(AkismetError):
+class MissingParameterError(AkismetError, ValueError):
     pass
 
 
