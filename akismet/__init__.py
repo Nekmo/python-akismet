@@ -1,9 +1,6 @@
 import datetime
 import requests
-
-from akismet.exceptions import AkismetError, InternalPykismetError, MissingApiKeyError, MissingParameterError, \
-    ExtraParametersError, AkismetServerError
-
+from akismet.exceptions import AkismetServerError, MissingParameterError
 
 __version__ = '0.1.0'
 
@@ -38,14 +35,15 @@ class Akismet:
                                              PYTHON_AKISMET_USER_AGENT)
 
     def _get_parameters(self, data):
-        del data['self']
+        data.pop('self', None)
         data = dict((key, value) for key, value in data.items() if value is not None)
-        data['is_test'] = data['is_test'] or self.is_test
+        data['is_test'] = data.get('is_test') or self.is_test
+        data['charset'] = self.charset
         if 'blog' not in data and not self.blog:
             raise MissingParameterError("blog is a required parameter if blog is not set on the akismet object")
         elif 'blog' not in data:
             data['blog'] = self.blog
-        for dt_param in ['comment_date_gmt', 'comment_post_modified_gmt']:
+        for dt_param in ['comment_date', 'comment_post_modified']:
             value = data.pop(dt_param, None)
             if not value:
                 continue
