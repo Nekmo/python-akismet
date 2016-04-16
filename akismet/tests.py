@@ -26,5 +26,8 @@ class TestAkismet(unittest.TestCase):
         with self.assertRaises(AkismetServerError):
             akismet.check('127.0.0.1', 'Test Agent', blog='http://127.0.0.1')
 
+    def test_submit_spam(self):
+        self.akismet.submit_spam('127.0.0.1', 'Spam Agent', blog='http://127.0.0.1')
+
 if __name__ == '__main__':
     unittest.main()
