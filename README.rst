@@ -88,7 +88,8 @@ Submit Ham
     akismet.submit_ham('192.168.1.12', 'FIREFOX / COMMENT USER AGENT', comment_author='Tim',
                        comment_author_email='tim@witch.co.uk',
                        comment_author_url='http://witch.co.uk',
-                       comment_content="Look, that rabbit's got a vicious streak a mile wide! It's a killer!")
+                       comment_content="Look, that rabbit's got a vicious streak a mile wide!"
+                                       "It's a killer!")
 
 Submit Spam
 -----------

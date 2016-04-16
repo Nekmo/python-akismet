@@ -1,1 +1,2 @@
-include *.md LICENSE
+include *.rst LICENSE
+include requirements.txt

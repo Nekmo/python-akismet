@@ -279,6 +279,7 @@ CLASSIFIERS.extend([
     'Development Status :: {0} - {1}'.format(STATUS_LEVEL, status_name),
 ])
 
+print(install_requires)
 setup(
     name=PACKAGE_NAME,
     version=package_version,
