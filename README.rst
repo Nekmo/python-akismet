@@ -1,3 +1,28 @@
+.. image:: https://img.shields.io/travis/Nekmo/python-akismet.svg?style=flat-square&maxAge=2592000
+  :target: https://travis-ci.org/Nekmo/python-akismet
+  :alt: Latest Travis CI build status
+
+.. image:: https://img.shields.io/pypi/v/python-akismet.svg?style=flat-square
+  :target: https://pypi.python.org/pypi/python-akismet
+  :alt: Latest PyPI version
+
+.. image:: https://img.shields.io/pypi/pyversions/python-akismet.svg?style=flat-square
+  :target: https://pypi.python.org/pypi/python-akismet
+  :alt: Python versions
+
+.. image:: https://img.shields.io/codeclimate/github/Nekmo/python-akismet.svg?style=flat-square
+  :target: https://codeclimate.com/github/Nekmo/python-akismet
+  :alt: Code Climate
+
+.. image:: https://img.shields.io/codecov/c/github/Nekmo/python-akismet/master.svg?style=flat-square
+  :target: https://codecov.io/github/Nekmo/python-akismet
+  :alt: Test coverage
+
+.. image:: https://img.shields.io/requires/github/Nekmo/python-akismet.svg?style=flat-square
+     :target: https://requires.io/github/Nekmo/python-akismet/requirements/?branch=master
+     :alt: Requirements Status
+
+
 Python-akismet
 ##############
 
