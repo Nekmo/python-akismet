@@ -1,3 +1,4 @@
+from __future__ import with_statement
 import unittest
 
 import os
@@ -23,8 +24,7 @@ class TestAkismet(unittest.TestCase):
 
     def test_invalid_api_key(self):
         akismet = Akismet('invalid_api_key', is_test=True)
-        with self.assertRaises(AkismetServerError):
-            akismet.check('127.0.0.1', 'Test Agent', blog='http://127.0.0.1')
+        self.assertRaises(AkismetServerError, akismet.check, '127.0.0.1', 'Test Agent', blog='http://127.0.0.1')
 
     def test_submit_spam(self):
         self.akismet.submit_spam('127.0.0.1', 'Spam Agent', blog='http://127.0.0.1')

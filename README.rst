@@ -89,5 +89,5 @@ The examples above show you pretty much everything you need to know.
 
 For a full list of supported parameters for each API call, see http://akismet.com/development/api/
 
-The code is only ~150 lines long anyway, so just look at '''akismet.py''' if you aren't sure about something.
+The code is only ~150 lines long anyway, so just look at '''akismet''' if you aren't sure about something.
 
