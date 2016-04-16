@@ -50,7 +50,7 @@ Installation
 
 2. Install this library::
 
-    pip install pykismet3
+    pip install python-akismet
 
 3. Make some calls to Akismet (see example below to get started)
 
