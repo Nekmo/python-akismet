@@ -1,21 +1,24 @@
-pykismet3
-=========
+Python-akismet
+##############
 
-A Python 3 Akismet client library.
+Pykismet3 fork. Support older versions of Python and improvements.
 
-## Supported API
+Supported API
+=============
 
 The Following Akismet API Calls are currently supported:
 * Comment Check
 * Submit Ham
 * Submit Spam
 
-## Unsupported API
+Unsupported API
+===============
 
 The following Akismet API Calls are not yet supported:
 * Key Verification
 
-## Installation
+Installation
+============
 
 1. Signup for Akismet and get yourself an API key at http://akismet.com/plans/
 
@@ -25,7 +28,8 @@ The following Akismet API Calls are not yet supported:
 
 3. Make some calls to Akismet (see example below to get started)
 
-## Example
+Example
+=======
 
 Import and instantiate Pykismet.
 
@@ -37,7 +41,8 @@ Import and instantiate Pykismet.
 
     a.api_key="YOUR_AKISMET_API_KEY"
 
-### Comment Check
+Comment Check
+-------------
 
     a.check({'user_ip': os.environ['REMOTE_ADDR'],
              'user_agent': os.environ['HTTP_USER_AGENT'],
@@ -47,7 +52,8 @@ Import and instantiate Pykismet.
              'is_test': 1,
     })
 
-### Submit Ham
+Submit Ham
+----------
 
     a.submit_ham({'user_ip': os.environ['REMOTE_ADDR'],
                   'user_agent': os.environ['HTTP_USER_AGENT'],
@@ -57,7 +63,8 @@ Import and instantiate Pykismet.
                   'is_test': 1,
     })
 
-### Submit Spam
+Submit Spam
+-----------
 
     a.submit_spam({'user_ip': os.environ['REMOTE_ADDR'],
                    'user_agent': os.environ['HTTP_USER_AGENT'],
@@ -67,16 +74,12 @@ Import and instantiate Pykismet.
                    'is_test': 1,
     })
 
-## Documentation
+Documentation
+#############
 
 The examples above show you pretty much everything you need to know.
 
 For a full list of supported parameters for each API call, see http://akismet.com/development/api/
 
-The code is only ~150 lines long anyway, so just look at '''pykismet.py''' if you aren't sure about something.
-
-## Bugs
-
-Patches to fix bugs and implement missing features welcome! Please make a pull request.
-
+The code is only ~150 lines long anyway, so just look at '''akismet.py''' if you aren't sure about something.
 

@@ -1,6 +1,9 @@
 import requests
 
 # Akismet Settings
+from akismet.exceptions import AkismetError, InternalPykismetError, MissingApiKeyError, MissingParameterError, \
+    ExtraParametersError, AkismetServerError
+
 AKISMET_USER_AGENT = "Pykismet/0.1.1"
 
 # API URIs
@@ -31,23 +34,6 @@ AKISMET_SUBMIT_SPAM_VALID_PARAMETERS = AKISMET_CHECK_VALID_PARAMETERS
 AKISMET_SUBMIT_HAM_VALID_PARAMETERS = AKISMET_CHECK_VALID_PARAMETERS
 
 # Custom Exceptions
-class AkismetError(Exception):
-    pass
-
-class InternalPykismetError(AkismetError):
-    pass
-
-class MissingApiKeyError(AkismetError):
-    pass
-
-class MissingParameterError(AkismetError):
-    pass
-
-class ExtraParametersError(AkismetError):
-    pass
-
-class AkismetServerError(AkismetError):
-    pass
 
 # The main Akismet class
 class Akismet:
@@ -80,7 +66,7 @@ class Akismet:
         # Check for any invalid extra parameters
         leftovers = set(parameters.keys()).difference_update(AKISMET_CHECK_VALID_PARAMETERS)
         if leftovers and leftovers.count() != 0:
-            raise ExtraParametersError("The following unrecognised parameters were supplied:"+str(leftovers))
+            raise ExtraParametersError("The following unrecognised parameters were supplied:" + str(leftovers))
 
         # Build the HTTP Headers for the Akismet query
         headers = {
@@ -97,6 +83,7 @@ class Akismet:
             return True
         else:
             raise AkismetServerError("Akismet server returned an error: "+r.text)
+
     def submit_spam(self, parameters):
         self.submit("spam", parameters)
 
@@ -128,7 +115,7 @@ class Akismet:
             raise InternalPykismetError("submit called with invalid t")
 
         if leftovers and leftovers.count() != 0:
-            raise ExtraParametersError("The following unrecognised parameters were supplied:"+str(leftovers))
+            raise ExtraParametersError("The following unrecognised parameters were supplied:" + str(leftovers))
 
         # Build the HTTP Headers for the Akismet query
         headers = {
