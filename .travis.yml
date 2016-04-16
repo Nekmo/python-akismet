@@ -1,5 +1,4 @@
 language: python
-sudo: false
 python:
 - 3.5
 - 3.4
@@ -23,7 +22,7 @@ install:
 - if [[ $TRAVIS_PYTHON_VERSION == '3.3' ]]; then export PYVER=py33; fi
 - if [[ $TRAVIS_PYTHON_VERSION == '3.4' ]]; then export PYVER=py34; fi
 - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then export PYVER=py35; fi
-script: COMMAND='coverage run' tox -e$PYVER
+script: tox -e$PYVER
 after_success:
 - codecov
 deploy:
