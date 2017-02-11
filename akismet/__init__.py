@@ -86,17 +86,20 @@ class Akismet:
 
     def submit_spam(self, user_ip, user_agent, comment_author=None, comment_author_email=None,
                     comment_author_url=None, comment_content=None, referrer='unknown', blog=None, permalink=None,
-                    comment_type=None, is_test=False):
+                    comment_type=None, is_test=False, blog_lang=None, comment_date=None, comment_post_modified=None,
+                    user_role=None):
         self.submit(True, **remove_self(locals()))
 
     def submit_ham(self, user_ip, user_agent, comment_author=None, comment_author_email=None,
                    comment_author_url=None, comment_content=None, referrer='unknown', blog=None, permalink=None,
-                   comment_type=None, is_test=False):
+                   comment_type=None, is_test=False, blog_lang=None, comment_date=None, comment_post_modified=None,
+                   user_role=None):
         self.submit(False, **remove_self(locals()))
 
     def submit(self, is_spam, user_ip, user_agent, comment_author=None, comment_author_email=None,
                comment_author_url=None, comment_content=None, referrer='unknown', blog=None, permalink=None,
-               comment_type=None, is_test=False):
+               comment_type=None, is_test=False, blog_lang=None, comment_date=None, comment_post_modified=None,
+               user_role=None):
         parameters = self._get_parameters(locals())
         r = self._request(self.get_submit_spam_url() if is_spam else self.get_submit_ham_url(), parameters)
         if r.text != "Thanks for making the web a better place.":
