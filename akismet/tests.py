@@ -41,7 +41,7 @@ class TestAkismet(unittest.TestCase):
         self.akismet.submit_spam('127.0.0.1', EVIL_USER_AGENT, blog='http://127.0.0.1')
 
     def test_submit_ham(self):
-        self.akismet.submit_spam('127.0.0.1', USER_AGENT, blog='http://127.0.0.1')
+        self.akismet.submit_ham('127.0.0.1', USER_AGENT, blog='http://127.0.0.1')
 
     def test_datetime(self):
         blog_url = 'http://127.0.0.1'
