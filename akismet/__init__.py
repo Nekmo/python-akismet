@@ -20,15 +20,23 @@ def remove_self(params):
     return params
 
 
+class SpamStatus:
+    Ham = 0
+    Unknown = 1
+    ProbableSpam = 2
+    DefiniteSpam = 3
+
+
 class Akismet:
     charset = 'utf-8'
     protocol = AKISMET_PROTOCOL
     domain = AKISMET_DOMAIN
     version = AKISMET_VERSION
 
-    def __init__(self, api_key, blog=None, application_user_agent=None, is_test=False):
+    def __init__(self, api_key, blog=None, application_user_agent=None, timeout=None, is_test=False):
         self.api_key = api_key
         self.blog = blog
+        self.timeout = timeout
         self.is_test = is_test
         self.user_agent = '{0} | {1}'.format(application_user_agent or 'Unknown Application/0.0.0',
                                              PYTHON_AKISMET_USER_AGENT)
@@ -53,7 +61,7 @@ class Akismet:
     def _request(self, url, parameters, headers=None):
         import requests
         headers = headers or self.get_headers()
-        return requests.post(url, data=parameters, headers=headers)
+        return requests.post(url, data=parameters, headers=headers, timeout=self.timeout)
 
     def get_url(self, url):
         return url.format(protocol=self.protocol, api_key=self.api_key, domain=self.domain, version=self.version)
@@ -78,10 +86,20 @@ class Akismet:
         parameters = self._get_parameters(locals())
         r = self._request(self.get_check_url(), parameters)
         try:
-            return r.json()
+            result = r.json()
+
+            if result is False:
+                return SpamStatus.Ham
+            elif result is True:
+                if r.headers.get('X-Akismet-Pro-Tip') is "discard":
+                    return SpamStatus.DefiniteSpam
+                else:
+                    return SpamStatus.ProbableSpam
+            else:
+                return SpamStatus.Unknown
         except ValueError:
             raise AkismetServerError("Akismet server returned an error: {0}".format(
-                r.headers.get('X-akismet-debug-help') or r.text
+                r.headers.get('X-Akismet-Debug-Help') or r.text
             ))
 
     def submit_spam(self, user_ip, user_agent, comment_author=None, comment_author_email=None,

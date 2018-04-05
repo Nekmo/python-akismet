@@ -3,7 +3,8 @@ from __future__ import with_statement
 import datetime
 import sys
 import os
-from akismet import Akismet
+import requests
+from akismet import Akismet, SpamStatus
 from akismet.exceptions import AkismetServerError, MissingParameterError
 
 if sys.version_info < (2, 7):
@@ -26,11 +27,11 @@ class TestAkismet(unittest.TestCase):
         self.akismet = Akismet(akismet_api_key, is_test=True)
 
     def test_check(self):
-        self.assertFalse(self.akismet.check('127.0.0.1', USER_AGENT, blog='http://127.0.0.1'))
+        self.assertEqual(self.akismet.check('127.0.0.1', USER_AGENT, blog='http://127.0.0.1'), SpamStatus.Ham)
 
     def test_check_spam(self):
-        self.assertTrue(self.akismet.check('127.0.0.1', EVIL_USER_AGENT, comment_author='viagra-test-123',
-                                           blog='http://127.0.0.1'))
+        self.assertEqual(self.akismet.check('127.0.0.1', EVIL_USER_AGENT, comment_author='viagra-test-123',
+                                            blog='http://127.0.0.1'), SpamStatus.ProbableSpam)
 
     def test_invalid_api_key(self):
         akismet = Akismet('invalid_api_key', is_test=True)
@@ -53,6 +54,12 @@ class TestAkismet(unittest.TestCase):
             self.assertIn('{0}_gmt'.format(dtkey), data)
             self.assertNotIn(dtkey, data)
             self.assertEqual(data['{0}_gmt'.format(dtkey)], locals()[dtkey].isoformat())
+
+    def test_timeout(self):
+        self.akismet = Akismet(os.environ['AKISMET_API_KEY'], timeout=0.000001, is_test=True)
+
+        with self.assertRaises(requests.ConnectionError):
+            self.akismet.submit_ham('127.0.0.1', USER_AGENT, blog='http://127.0.0.1')
 
     def test_require_blog_param(self):
         with self.assertRaises(MissingParameterError):
