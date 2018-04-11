@@ -1,7 +1,7 @@
 import datetime
 from akismet.exceptions import AkismetServerError, MissingParameterError
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 PYTHON_AKISMET_USER_AGENT = "Python-Akismet/{0}".format(__version__)
 
