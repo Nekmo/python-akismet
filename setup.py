@@ -62,7 +62,7 @@ PLATFORMS = [
     # 'android'
 ]
 ROOT_INCLUDE = ['requirements.txt', 'VERSION', 'LICENSE.txt']
-PYTHON_VERSIONS = ['2.6-3.5']  # or ranges: 3.1-3.5, 2.6-3.4...
+PYTHON_VERSIONS = ['2.6-2.7', '3.2-3.6']  # or ranges: 3.1-3.5, 2.6-3.4...
 INSTALL_REQUIRES = []  # Necesario si no hay un requirements.txt
 
 ######## FIN DE LA CONFIGURACIÓN DEL PAQUTE ########
