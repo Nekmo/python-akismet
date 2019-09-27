@@ -82,7 +82,7 @@ class Akismet:
 
     def check(self, user_ip, user_agent, comment_author=None, comment_author_email=None, comment_author_url=None,
               comment_content=None, referrer='unknown', blog=None, permalink=None, comment_type=None, blog_lang=None,
-              comment_date=None, comment_post_modified=None, user_role=None, is_test=False):
+              comment_date=None, comment_post_modified=None, user_role=None, is_test=False, recheck_reason=None):
         parameters = self._get_parameters(locals())
         r = self._request(self.get_check_url(), parameters)
         try:
