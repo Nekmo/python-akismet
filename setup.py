@@ -6,7 +6,6 @@ from distutils.util import convert_path
 from fnmatch import fnmatchcase
 import os
 import sys
-import uuid
 
 ###############################
 #  Configuración del paquete  #
@@ -172,15 +171,6 @@ def find_package_data(where='.', package='',
 
 ##############################################################################
 
-# Lista de dependencias a instalar
-if os.path.exists(requirements_path):
-    requirements = list(parse_requirements(requirements_path, session=uuid.uuid1()))
-    install_requires = [str(ir.req) for ir in requirements]
-    dependency_links = [get_url(ir) for ir in requirements if get_url(ir)]
-else:
-    install_requires = INSTALL_REQUIRES
-    dependency_links = []
-
 # Todos los módulos y submódulos a instalar (module, module.submodule, module.submodule2...)
 packages = find_packages(__dir__)
 # Prevent include symbolic links
@@ -244,6 +234,11 @@ for key, parts in platforms_classifiers.items():
     CLASSIFIERS.append('Operating System :: {0}'.format(' :: '.join(parts)))
 
 
+def read_file(file):
+    with open(file, 'r') as f:
+        return f.read()
+
+
 # Añadir la versión de Python a los Classifiers
 def frange(x, y, jump):
     while x < y:
@@ -279,7 +274,10 @@ CLASSIFIERS.extend([
     'Development Status :: {0} - {1}'.format(STATUS_LEVEL, status_name),
 ])
 
-print(install_requires)
+
+install_requires = read_file(requirements_path)
+
+
 setup(
     name=PACKAGE_NAME,
     version=package_version,
@@ -299,7 +297,7 @@ setup(
 
     provides=modules,
     install_requires=install_requires,
-    dependency_links=dependency_links,
+    dependency_links=[],
 
     packages=packages,
     include_package_data=True,
