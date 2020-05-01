@@ -57,7 +57,6 @@ PLATFORMS = [
 ]
 ROOT_INCLUDE = ['requirements.txt', 'VERSION', 'LICENSE.txt']
 PYTHON_VERSIONS = ['2.6-2.7', '3.2-3.6']  # or ranges: 3.1-3.5, 2.6-3.4...
-INSTALL_REQUIRES = ['requests']
 
 ######## FIN DE LA CONFIGURACIÓN DEL PAQUTE ########
 
@@ -237,6 +236,11 @@ for key, parts in platforms_classifiers.items():
     CLASSIFIERS.append('Operating System :: {0}'.format(' :: '.join(parts)))
 
 
+def read_file(file):
+    with open(file, 'r') as f:
+        return f.read()
+
+
 # Añadir la versión de Python a los Classifiers
 def frange(x, y, jump):
     while x < y:
@@ -272,6 +276,10 @@ CLASSIFIERS.extend([
     'Development Status :: {0} - {1}'.format(STATUS_LEVEL, status_name),
 ])
 
+
+install_requires = read_file(requirements_path)
+
+
 setup(
     name=PACKAGE_NAME,
     version=package_version,
@@ -290,7 +298,7 @@ setup(
     platforms=PLATFORMS,
 
     provides=modules,
-    install_requires=INSTALL_REQUIRES,
+    install_requires=install_requires,
     dependency_links=[],
 
     packages=packages,
