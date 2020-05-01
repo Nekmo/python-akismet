@@ -10,12 +10,6 @@ import uuid
 import pip
 
 
-if LooseVersion(pip.__version__) >= "10.0.0":
-    from pip._internal.req import parse_requirements
-else:
-    from pip.req import parse_requirements
-
-
 ###############################
 #  Configuración del paquete  #
 ###############################
@@ -63,7 +57,7 @@ PLATFORMS = [
 ]
 ROOT_INCLUDE = ['requirements.txt', 'VERSION', 'LICENSE.txt']
 PYTHON_VERSIONS = ['2.6-2.7', '3.2-3.6']  # or ranges: 3.1-3.5, 2.6-3.4...
-INSTALL_REQUIRES = []  # Necesario si no hay un requirements.txt
+INSTALL_REQUIRES = ['requests']
 
 ######## FIN DE LA CONFIGURACIÓN DEL PAQUTE ########
 
@@ -180,15 +174,6 @@ def find_package_data(where='.', package='',
 
 ##############################################################################
 
-# Lista de dependencias a instalar
-if os.path.exists(requirements_path):
-    requirements = list(parse_requirements(requirements_path, session=uuid.uuid1()))
-    install_requires = [str(ir.req) for ir in requirements]
-    dependency_links = [get_url(ir) for ir in requirements if get_url(ir)]
-else:
-    install_requires = INSTALL_REQUIRES
-    dependency_links = []
-
 # Todos los módulos y submódulos a instalar (module, module.submodule, module.submodule2...)
 packages = find_packages(__dir__)
 # Prevent include symbolic links
@@ -287,7 +272,6 @@ CLASSIFIERS.extend([
     'Development Status :: {0} - {1}'.format(STATUS_LEVEL, status_name),
 ])
 
-print(install_requires)
 setup(
     name=PACKAGE_NAME,
     version=package_version,
@@ -306,8 +290,8 @@ setup(
     platforms=PLATFORMS,
 
     provides=modules,
-    install_requires=install_requires,
-    dependency_links=dependency_links,
+    install_requires=INSTALL_REQUIRES,
+    dependency_links=[],
 
     packages=packages,
     include_package_data=True,
