@@ -65,7 +65,7 @@ Import and instance Akismet.
 
     # API KEY (first argument) is required. blog can be defined later.
     akismet = Akismet('1ba29d6f120c', blog="http://your.blog/url",
-                      user_agent="My Application Name/0.0.1")
+                      application_user_agent="My Application Name/0.0.1")
 
 
 Comment Check
