@@ -5,9 +5,6 @@ python:
 - 3.6
 - 3.5
 - 2.7
-env:
-  global:
-    secure: tYIjIDHWr6RvZcXG09Liehl4dZERDpJ0U08/9G3pij4suqXycD5ECr6xa4kuRkh14oOIj559ajrHIsJJp2d2/du8rIr7trnHMsxGDwgXR2kjT910LPnQYL5BtAM/IkAQTkCppXO1QhB+Q36tpX/FXYg9drW5OZoiO9+YG0BDZwjdyx/zfPnwoYP2zuKk9MY1+c9SPuczwUKsqFIwx437cDy4mZhN/RTFYleZCUI2PwFnSz/MAUQRtBxecI0CYSKjTGQ22ACXQQDZEeJ/etyEO7kSr8GzFgLaEzjti3fc1cLQg/95I0/6JpQ/yzV7PHp9f8GS2kG1VtjEiPKqCJnRML1d4G+YKvc3KTA6SnIbIn7YeDinmytZ7qGuykCfEZfVlSXthsbPdXZHNUejDo+eim0wQdq2Bd5DIG3sbqfOAqIOwyU5tr/IsGKvc5TLzzzmYmlrI9M+2y8tc9MiqbR//zxlCICVG6Xr+meqb2zV7HR4TfEGETEUSCMPzkT1oU4QGWyA2bTIEXpM9ZDi1pVVpFOWHTK7PinY0w8oOP08h9+SVXlN4rNmmb2YmiW/evrXUF4nx6MvnWwfDRemJKBcTZbamGLmpcQqHg8tHbnIFcuCKPgIrm55BqvsY6Oe7SA2Sl9k4oQVvh8+cDKB/piIaDrwpVL95r+xSioxVHfywPY=
 
 before_install:
 - pip install codecov tox>=1.8 virtualenv==13.1.2
