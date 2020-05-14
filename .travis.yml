@@ -1,4 +1,5 @@
 language: python
+dist: bionic
 python:
 - 3.8
 - 3.7
@@ -7,7 +8,7 @@ python:
 - 2.7
 
 before_install:
-- pip install codecov tox>=1.8 virtualenv==13.1.2
+- pip install codecov tox>=1.8
 install:
 - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then export PYVER=py27; fi
 - if [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then export PYVER=py35; fi
@@ -15,7 +16,7 @@ install:
 - if [[ $TRAVIS_PYTHON_VERSION == '3.7' ]]; then export PYVER=py37; fi
 - if [[ $TRAVIS_PYTHON_VERSION == '3.8' ]]; then export PYVER=py38; fi
 - if [[ $TRAVIS_PYTHON_VERSION != '3.2' ]]; then export COMMAND='coverage run'; fi
-script: COMMAND="${COMMAND:-python}" tox -e$PYVER
+script: COMMAND='coverage run' tox -e$PYVER
 after_success:
 - codecov
 deploy:

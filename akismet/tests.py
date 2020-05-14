@@ -3,7 +3,11 @@ from __future__ import with_statement
 import datetime
 import sys
 import os
-from urllib.parse import parse_qsl
+
+try:
+    from urllib.parse import parse_qsl
+except ImportError:
+    from urlparse import parse_qsl
 
 import requests
 import requests_mock
