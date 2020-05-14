@@ -18,15 +18,15 @@ jobs:
     - os: linux
       dist: xenial
       python: 3.4
-    - os: linux
-      dist: trusty
-      python: 3.3
-    - os: linux
-      dist: trusty
-      python: 3.2
-    - os: linux
-      dist: precise
-      python: 3.1
+#    - os: linux
+#      dist: trusty
+#      python: 3.3
+#    - os: linux
+#      dist: trusty
+#      python: 3.2
+#    - os: linux
+#      dist: precise
+#      python: 3.1
     - os: linux
       dist: bionic
       python: 2.7
