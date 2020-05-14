@@ -1,3 +1,5 @@
+# https://docs.travis-ci.com/user/languages/python/#python-versions
+# https://docs.travis-ci.com/user/reference/overview/#linux
 language: python
 jobs:
   include:
@@ -23,7 +25,7 @@ jobs:
       dist: trusty
       python: 3.2
     - os: linux
-      dist: trusty
+      dist: precise
       python: 3.1
     - os: linux
       dist: bionic
@@ -42,7 +44,7 @@ install:
 - if [[ $TRAVIS_PYTHON_VERSION == '3.7' ]]; then export PYVER=py37; fi
 - if [[ $TRAVIS_PYTHON_VERSION == '3.8' ]]; then export PYVER=py38; fi
 - if [[ $TRAVIS_PYTHON_VERSION != '3.2' ]]; then export COMMAND='coverage run'; fi
-script: COMMAND='coverage run' tox -e$PYVER
+script: COMMAND="${COMMAND:-python}" tox -e$PYVER
 after_success:
 - codecov
 deploy:
