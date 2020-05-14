@@ -8,7 +8,8 @@ from urllib.parse import parse_qsl
 import requests
 import requests_mock
 
-from akismet import Akismet, SpamStatus, AKISMET_CHECK_URL, AKISMET_DOMAIN, AKISMET_VERSION
+from akismet import Akismet, SpamStatus, AKISMET_CHECK_URL, AKISMET_DOMAIN, AKISMET_VERSION, AKISMET_SUBMIT_SPAM_URL, \
+    AKISMET_SUBMIT_HAM_URL
 from akismet.exceptions import AkismetServerError, MissingParameterError
 
 if sys.version_info < (2, 7):
@@ -76,10 +77,16 @@ class TestAkismet(unittest.TestCase):
             akismet.check(self.user_ip, EVIL_USER_AGENT, blog=self.blog)
 
     def test_submit_spam(self):
-        self.akismet.submit_spam('127.0.0.1', EVIL_USER_AGENT, blog='http://127.0.0.1')
+        parameters = dict(self._get_default_parameters(), user_agent=EVIL_USER_AGENT, is_spam='True')
+        self.mock.post(self._get_url(AKISMET_SUBMIT_SPAM_URL), text="Thanks for making the web a better place.",
+                       additional_matcher=lambda request: dict(parse_qsl(request.text)) == parameters)
+        self.akismet.submit_spam(self.user_ip, EVIL_USER_AGENT, blog=self.blog)
 
     def test_submit_ham(self):
-        self.akismet.submit_ham('127.0.0.1', USER_AGENT, blog='http://127.0.0.1')
+        parameters = dict(self._get_default_parameters(), user_agent=EVIL_USER_AGENT, is_spam='False')
+        self.mock.post(self._get_url(AKISMET_SUBMIT_HAM_URL), text="Thanks for making the web a better place.",
+                       additional_matcher=lambda request: dict(parse_qsl(request.text)) == parameters)
+        self.akismet.submit_spam(self.user_ip, USER_AGENT, blog=self.blog)
 
     def test_datetime(self):
         blog_url = 'http://127.0.0.1'
