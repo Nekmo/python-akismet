@@ -7,6 +7,7 @@ from urllib.parse import parse_qsl
 
 import requests
 import requests_mock
+from requests.exceptions import ConnectTimeout
 
 from akismet import Akismet, SpamStatus, AKISMET_CHECK_URL, AKISMET_DOMAIN, AKISMET_VERSION, AKISMET_SUBMIT_SPAM_URL, \
     AKISMET_SUBMIT_HAM_URL
@@ -83,10 +84,10 @@ class TestAkismet(unittest.TestCase):
         self.akismet.submit_spam(self.user_ip, EVIL_USER_AGENT, blog=self.blog)
 
     def test_submit_ham(self):
-        parameters = dict(self._get_default_parameters(), user_agent=EVIL_USER_AGENT, is_spam='False')
+        parameters = dict(self._get_default_parameters(), user_agent=USER_AGENT, is_spam='False')
         self.mock.post(self._get_url(AKISMET_SUBMIT_HAM_URL), text="Thanks for making the web a better place.",
                        additional_matcher=lambda request: dict(parse_qsl(request.text)) == parameters)
-        self.akismet.submit_spam(self.user_ip, USER_AGENT, blog=self.blog)
+        self.akismet.submit_ham(self.user_ip, USER_AGENT, blog=self.blog)
 
     def test_datetime(self):
         blog_url = 'http://127.0.0.1'
@@ -100,10 +101,10 @@ class TestAkismet(unittest.TestCase):
             self.assertEqual(data['{0}_gmt'.format(dtkey)], locals()[dtkey].isoformat())
 
     def test_timeout(self):
-        self.akismet = Akismet(os.environ['AKISMET_API_KEY'], timeout=0.000001, is_test=True)
+        self.mock.post(self._get_url(AKISMET_SUBMIT_HAM_URL), exc=ConnectTimeout)
 
         with self.assertRaises(requests.ConnectionError):
-            self.akismet.submit_ham('127.0.0.1', USER_AGENT, blog='http://127.0.0.1')
+            self.akismet.submit_ham(self.user_ip, USER_AGENT, blog=self.blog)
 
     def test_require_blog_param(self):
         with self.assertRaises(MissingParameterError):
