@@ -3,8 +3,12 @@ from __future__ import with_statement
 import datetime
 import sys
 import os
+from urllib.parse import parse_qsl
+
 import requests
-from akismet import Akismet, SpamStatus
+import requests_mock
+
+from akismet import Akismet, SpamStatus, AKISMET_CHECK_URL, AKISMET_DOMAIN, AKISMET_VERSION
 from akismet.exceptions import AkismetServerError, MissingParameterError
 
 if sys.version_info < (2, 7):
@@ -20,23 +24,56 @@ class TestAkismet(unittest.TestCase):
     akismet = None
 
     def setUp(self):
-        try:
-            akismet_api_key = os.environ['AKISMET_API_KEY']
-        except KeyError:
-            raise EnvironmentError('Provide AKISMET_API_KEY environment setting.')
-        self.akismet = Akismet(akismet_api_key, is_test=True)
+        self.api_key = 'mock'
+        self.is_test = True
+        self.blog = 'http://127.0.0.1'
+        self.user_ip = '127.0.0.1'
+        self.akismet = Akismet('mock', is_test=self.is_test)
+        self.mock = requests_mock.Mocker()
+        self.mock.start()
+
+    def tearDown(self):
+        self.mock.stop()
+
+    def _get_url(self, url_format, api_key=None):
+        return url_format.format(
+            protocol='https',
+            api_key=api_key or self.api_key,
+            domain=AKISMET_DOMAIN,
+            version=AKISMET_VERSION,
+        )
+
+    def _get_default_parameters(self):
+        return {
+            'user_ip': self.user_ip,
+            'referrer': 'unknown',
+            'user_agent': USER_AGENT,
+            'charset': Akismet.charset,
+            'is_test': str(self.is_test),
+            'blog': self.blog,
+        }
 
     def test_check(self):
-        self.assertEqual(self.akismet.check('127.0.0.1', USER_AGENT, blog='http://127.0.0.1'), SpamStatus.Ham)
+        parameters = dict(self._get_default_parameters(), user_agent=USER_AGENT)
+        self.mock.post(self._get_url(AKISMET_CHECK_URL), json=False,
+                       additional_matcher=lambda request: dict(parse_qsl(request.text)) == parameters)
+        self.assertEqual(self.akismet.check(self.user_ip, USER_AGENT, blog=self.blog), SpamStatus.Ham)
 
     def test_check_spam(self):
-        self.assertEqual(self.akismet.check('127.0.0.1', EVIL_USER_AGENT, comment_author='viagra-test-123',
-                                            blog='http://127.0.0.1'), SpamStatus.ProbableSpam)
+        comment_author = 'viagra-test-123'
+        parameters = dict(self._get_default_parameters(), user_agent=EVIL_USER_AGENT,
+                          comment_author=comment_author)
+        self.mock.post(self._get_url(AKISMET_CHECK_URL), json=True,
+                       additional_matcher=lambda request: dict(parse_qsl(request.text)) == parameters)
+        self.assertEqual(self.akismet.check(self.user_ip, EVIL_USER_AGENT, comment_author=comment_author,
+                                            blog=self.blog), SpamStatus.ProbableSpam)
 
     def test_invalid_api_key(self):
-        akismet = Akismet('invalid_api_key', is_test=True)
+        api_key = 'invalid_api_key'
+        self.mock.post(self._get_url(AKISMET_CHECK_URL, api_key=api_key), text='')
+        akismet = Akismet(api_key, is_test=True)
         with self.assertRaises(AkismetServerError):
-            akismet.check('127.0.0.1', EVIL_USER_AGENT, blog='http://127.0.0.1')
+            akismet.check(self.user_ip, EVIL_USER_AGENT, blog=self.blog)
 
     def test_submit_spam(self):
         self.akismet.submit_spam('127.0.0.1', EVIL_USER_AGENT, blog='http://127.0.0.1')
