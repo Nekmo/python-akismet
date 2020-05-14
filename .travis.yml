@@ -1,14 +1,33 @@
 language: python
-python:
-- 3.8
-- 3.7
-- 3.6
-- 3.5
-- 3.4
-- 3.3
-- 3.2
-- 3.1
-- 2.7
+jobs:
+  include:
+    - os: linux
+      dist: bionic
+      python: 3.8
+    - os: linux
+      dist: bionic
+      python: 3.7
+    - os: linux
+      dist: bionic
+      python: 3.6
+    - os: linux
+      dist: xenial
+      python: 3.5
+    - os: linux
+      dist: xenial
+      python: 3.4
+    - os: linux
+      dist: trusty
+      python: 3.3
+    - os: linux
+      dist: trusty
+      python: 3.2
+    - os: linux
+      dist: trusty
+      python: 3.1
+    - os: linux
+      dist: bionic
+      python: 2.7
 
 before_install:
 - pip install codecov tox>=1.8
