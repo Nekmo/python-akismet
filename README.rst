@@ -1,6 +1,6 @@
-.. image:: https://img.shields.io/github/workflow/status/Nekmo/dirhunt/python-akismet.svg?style=flat-square&maxAge=2592000
-  :target: https://github.com/Nekmo/dirhunt/actions?query=workflow%3Apython-akismet
-  :alt: Latest python-akismet CI test status
+.. image:: https://img.shields.io/github/workflow/status/Nekmo/python-akismet/Tests.svg?style=flat-square&maxAge=2592000
+  :target: https://github.com/Nekmo/python-akismet/actions?query=workflow%3ATests
+  :alt: Latest Tests CI build status
 
 .. image:: https://img.shields.io/pypi/v/python-akismet.svg?style=flat-square
   :target: https://pypi.python.org/pypi/python-akismet
