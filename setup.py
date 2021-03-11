@@ -281,7 +281,7 @@ setup(
     name=PACKAGE_NAME,
     version=package_version,
 
-    description=DESCRIPTION,
+    description=DESCRIPTION.strip(),
     long_description=long_description,
 
     author=AUTHOR,
