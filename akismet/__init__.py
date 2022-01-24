@@ -91,7 +91,7 @@ class Akismet:
             if result is False:
                 return SpamStatus.Ham
             elif result is True:
-                if r.headers.get('X-Akismet-Pro-Tip') is "discard":
+                if r.headers.get('X-Akismet-Pro-Tip') == "discard":
                     return SpamStatus.DefiniteSpam
                 else:
                     return SpamStatus.ProbableSpam
