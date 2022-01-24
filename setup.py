@@ -41,8 +41,8 @@ Akismet v1.1 module for Python.
 
 # Requerido para la correcta instalación del paquete
 PLATFORMS = [
-    # 'universal',
-    'linux',
+    'universal',
+    # 'linux',
     # 'macosx',
     # 'solaris',
     # 'irix',
@@ -52,7 +52,7 @@ PLATFORMS = [
     # 'android'
 ]
 ROOT_INCLUDE = ['requirements.txt', 'VERSION', 'LICENSE.txt']
-PYTHON_VERSIONS = ['2.6-2.7'] + ['3.4-3.8']  # or ranges: 3.1-3.5, 2.6-3.4...
+PYTHON_VERSIONS = ['2.6-2.7'] + ['3.4-3.10']  # or ranges: 3.1-3.5, 2.6-3.4...
 INSTALL_REQUIRES = []  # Necesario si no hay un requirements.txt
 
 ######## FIN DE LA CONFIGURACIÓN DEL PAQUTE ########
